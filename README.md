@@ -20,6 +20,15 @@ The game is a Progressive Web App, so it installs like a regular app and works o
 
 ---
 
+## How this was built (transparency)
+
+I built this game with **Claude Code** (Anthropic) as an AI pair-programmer. Every commit it helped write carries a `Co-Authored-By: Claude` line. The idea, a stealth puzzle where the map itself is the unreliable narrator, and the game design are mine: the lie types, the scoring, the "angry map" mechanic and the rule that a level never forces you to guess. I also playtested every change and decided what came next.
+
+**Where to look in the code:**
+- [`src/utils/levelGenerator.ts`](src/utils/levelGenerator.ts): a seeded procedural generator (maze carving, loops, rooms, lie injection).
+- [`scripts/verify-generator.ts`](scripts/verify-generator.ts) (`npm test`): checks the campaign plus 500 generated levels (100 levels × 5 seeds) to prove that each one is solvable and that every lie can be detected without guessing.
+- [`src/hooks/useGame.ts`](src/hooks/useGame.ts): the game state and the logic for calling out a lie.
+
 ## How to play
 
 | Action | Control |
