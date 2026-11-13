@@ -3,6 +3,7 @@ import type { Lang, Pos } from './types/game'
 import { STRINGS } from './i18n'
 import { useGame } from './hooks/useGame'
 import { useAudio } from './hooks/useAudio'
+import { useInstallPrompt } from './hooks/useInstallPrompt'
 import { isMapAngry, liesRemaining } from './utils/gameLogic'
 import { GameBoard } from './components/GameBoard'
 import { Minimap } from './components/Minimap'
@@ -44,6 +45,7 @@ type Flash = { cells: Pos[]; kind: 'wrong' | 'caught'; id: number } | null
 export default function App() {
   const { game, dispatch } = useGame()
   const audio = useAudio()
+  const installer = useInstallPrompt()
   const [lang, setLang] = useState<Lang>(readLang)
   const [showIntro, setShowIntro] = useState(true)
   const [toast, setToast] = useState<{ text: string; tone: 'good' | 'bad' | 'info'; id: number } | null>(null)
@@ -142,10 +144,11 @@ export default function App() {
   // ── Input ──
   const overlayOpen = showIntro || game.phase !== 'playing'
   const primaryAction = useCallback(() => {
+    audio.unlock()
     if (showIntro) setShowIntro(false)
     else if (game.phase === 'dead') dispatch({ type: 'retry' })
     else if (game.phase === 'won') dispatch({ type: 'next' })
-  }, [showIntro, game.phase, dispatch])
+  }, [showIntro, game.phase, dispatch, audio])
 
   useEffect(() => {
     const onKey = (ev: KeyboardEvent) => {
@@ -160,6 +163,7 @@ export default function App() {
       }
       if (d) {
         ev.preventDefault()
+        audio.unlock()
         dispatch({ type: 'move', dx: d[0], dy: d[1] })
       } else if (ev.code === 'KeyR') {
         dispatch({ type: 'restartLevel' })
@@ -167,13 +171,14 @@ export default function App() {
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [overlayOpen, primaryAction, dispatch, game.phase])
+  }, [overlayOpen, primaryAction, dispatch, game.phase, audio])
 
   const onCall = useCallback(
     (pos: Pos) => {
+      audio.unlock()
       if (!overlayOpen) dispatch({ type: 'call', pos })
     },
-    [overlayOpen, dispatch],
+    [overlayOpen, dispatch, audio],
   )
   const step = (dx: number, dy: number) => !overlayOpen && dispatch({ type: 'move', dx, dy })
 
@@ -208,6 +213,8 @@ export default function App() {
         onRestart={() => dispatch({ type: 'restartLevel' })}
         onToggleMute={() => audio.setMuted(!audio.muted)}
         onToggleLang={() => setLang(lang === 'he' ? 'en' : 'he')}
+        canInstall={installer.canInstall}
+        onInstall={() => void installer.install()}
       />
 
       <main dir="ltr" className="flex flex-col items-center gap-4 p-4 lg:flex-row lg:items-start lg:justify-center">
@@ -276,6 +283,23 @@ export default function App() {
 
       {showIntro && (
         <Overlay title={t.title} tone="intro" action={t.start} onAction={primaryAction}>
+          <div className="flex items-center justify-between gap-3 rounded-lg border border-zinc-800 bg-zinc-900/60 p-2">
+            <span className="px-1 text-xs font-semibold text-zinc-400">{t.chooseLang}</span>
+            <div dir="ltr" className="flex gap-2" role="radiogroup" data-testid="lang-choice">
+              {(['he', 'en'] as const).map((l) => (
+                <button
+                  key={l}
+                  role="radio"
+                  aria-checked={lang === l}
+                  onClick={() => setLang(l)}
+                  className={`btn min-w-24 py-2 text-base ${lang === l ? 'btn-accent ring-1 ring-amber-400/60' : ''}`}
+                  data-testid={`choose-${l}`}
+                >
+                  {l === 'he' ? 'עברית' : 'English'}
+                </button>
+              ))}
+            </div>
+          </div>
           <p className="text-zinc-400 italic">{t.subtitle}</p>
           <p>{t.intro}</p>
           <p>{t.intro2}</p>

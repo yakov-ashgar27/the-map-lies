@@ -129,5 +129,16 @@ export function useAudio() {
     [ctx, tone, burst],
   )
 
-  return useMemo(() => ({ play, muted, setMuted }), [play, muted])
+  /** Browsers only allow audio after a user gesture: call this from a click/keydown handler. */
+  const unlock = useCallback(() => {
+    const c = ctx()
+    if (!c) return
+    // A silent one-sample buffer fully unlocks audio on iOS Safari.
+    const src = c.createBufferSource()
+    src.buffer = c.createBuffer(1, 1, 22050)
+    src.connect(c.destination)
+    src.start(0)
+  }, [ctx])
+
+  return useMemo(() => ({ play, unlock, muted, setMuted }), [play, unlock, muted])
 }

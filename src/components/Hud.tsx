@@ -16,6 +16,8 @@ interface Props {
   onRestart: () => void
   onToggleMute: () => void
   onToggleLang: () => void
+  canInstall: boolean
+  onInstall: () => void
 }
 
 function Stat({ label, value, accent }: { label: string; value: ReactNode; accent?: string }) {
@@ -56,6 +58,11 @@ export function Hud(p: Props) {
       </div>
 
       <div className="flex flex-wrap items-center gap-2">
+        {p.canInstall && (
+          <button onClick={p.onInstall} className="btn btn-accent" data-testid="install">
+            📲 {t.install}
+          </button>
+        )}
         <button onClick={p.onEndless} className="btn btn-accent" data-testid="endless">
           ∞ {t.endless}
         </button>

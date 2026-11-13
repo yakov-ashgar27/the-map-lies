@@ -6,7 +6,7 @@ export const CAMPAIGN_SPECS: AsciiLevelSpec[] = [
   {
     name: { he: 'הקיר שאינו', en: 'The Wall That Isn’t' },
     hint: {
-      he: 'לפי המפה אין דרך אל היציאה. אולי אחד הקירות בכלל לא שם? כשתזהה שקר — לחץ עליו.',
+      he: 'לפי המפה אין שום דרך להגיע ליציאה. אולי אחד הקירות בכלל לא שם? כשתזהה שקר — לחץ עליו.',
       en: 'The map says the exit is sealed off. Maybe one of those walls isn’t really there? Click a lie when you spot it.',
     },
     rows: [
@@ -24,8 +24,8 @@ export const CAMPAIGN_SPECS: AsciiLevelSpec[] = [
   {
     name: { he: 'הקיצור שלא קיים', en: 'The Shortcut That Isn’t' },
     hint: {
-      he: 'המפה מבטיחה מסדרון ישר אל היציאה. סמוך על הפנס שלך, לא על המפה. (^ = מלכודת אמיתית — המפה לא משקרת עליה)',
-      en: 'The map promises a straight corridor to the exit. Trust your lantern, not the map. (^ = a real trap — the map is honest about it)',
+      he: 'המפה מבטיחה מסדרון ישר אל היציאה. סמוך על הפנס שלך, לא על המפה. שים לב: מלכודת שמסומנת במפה היא אמיתית — עליה המפה לא משקרת.',
+      en: 'The map promises a straight corridor to the exit. Trust your lantern, not the map. Note: a trap marked on the map is real — the map doesn’t lie about those.',
     },
     rows: [
       '###########',
@@ -40,7 +40,7 @@ export const CAMPAIGN_SPECS: AsciiLevelSpec[] = [
   {
     name: { he: 'רצפה תמימה', en: 'Innocent Floor' },
     hint: {
-      he: 'הדרך הקצרה נראית בטוחה במפה. תמיד תסתכל לאן אתה דורך — מלכודת מוסווית נראית רק מקרוב.',
+      he: 'במפה הדרך הקצרה נראית בטוחה. תמיד הסתכל לאן אתה דורך — מלכודת מוסווית נראית רק מקרוב.',
       en: 'The short way looks safe on the map. Always look where you step — a disguised trap only shows up close.',
     },
     rows: [
@@ -56,7 +56,7 @@ export const CAMPAIGN_SPECS: AsciiLevelSpec[] = [
   {
     name: { he: 'הדלת הלא נכונה', en: 'The Wrong Door' },
     hint: {
-      he: 'שני שקרים. היציאה במפה נראית חסומה… אבל האם היא בכלל שם?',
+      he: 'הפעם יש שני שקרים. במפה היציאה נראית חסומה… אבל האם היא בכלל שם?',
       en: 'Two lies. The exit on the map looks walled off… but is it even there?',
     },
     rows: [
@@ -74,7 +74,7 @@ export const CAMPAIGN_SPECS: AsciiLevelSpec[] = [
   {
     name: { he: 'המפה מתעצבנת', en: 'The Map Gets Angry' },
     hint: {
-      he: 'מכאן המפה עצבנית: כשאתה מתקרב לשקר שלא נתפס, המסגרת שלה מאדימה ומרצדת. היזהר מאוצרות שנראים טוב מדי.',
+      he: 'מעכשיו המפה עצבנית: כשאתה מתקרב לשקר שעוד לא נתפס, המסגרת שלה מאדימה ומרצדת. היזהר מאוצרות שנראים טוב מכדי להיות אמיתיים.',
       en: 'From now on the map gets nervous: near an uncaught lie its frame turns red and glitches. Beware of treasure that looks too good.',
     },
     angryMap: true,

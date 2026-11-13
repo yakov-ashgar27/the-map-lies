@@ -6,7 +6,17 @@ A 2D grid-based puzzle-stealth game. You crawl through a pitch-black dungeon wit
 
 ![Gameplay: level 5, the map is angry](docs/screenshot.png)
 
-The UI is in Hebrew by default (RTL), with a one-click English toggle.
+The UI is in Hebrew by default (RTL), and you choose Hebrew or English on the start screen (you can switch any time from the top bar).
+
+**▶ Play:** https://yakov-ashgar27.github.io/the-map-lies/
+
+### Install it like an app
+
+The game is a Progressive Web App, so it installs like a regular app and works offline.
+
+- **Windows / Mac (Chrome or Edge):** open the link and click **📲 התקנה כאפליקציה** in the top bar, or the install icon in the address bar. The game gets its own window and a shortcut on the desktop and in the Start menu.
+- **Android:** open the link in Chrome, then use the menu ⋮ → **Install app** (or **Add to Home screen**).
+- **iPhone / iPad:** open the link in Safari, then Share → **Add to Home Screen**.
 
 ---
 
@@ -107,6 +117,8 @@ npm run verify
 - **React 19 + TypeScript + Vite**
 - **Tailwind CSS v4** (via `@tailwindcss/vite`), plus custom CSS for the lantern glow, CRT scanlines, glitch and static effects
 - **Web Audio API** for all sound effects (footsteps, bumps, the lie-caught arpeggio, the full-reveal fanfare, wrong-call buzz, trap death, level complete, angry-map static). They are synthesized on the fly, with no audio files.
+- **PWA:** a web manifest, icons and a service worker (`public/sw.js`) make it installable and playable offline.
+- **GitHub Actions** (`.github/workflows/deploy.yml`) runs `npm run verify` and `npm run build` on every push to `main`, then deploys to GitHub Pages.
 - No runtime dependencies besides React.
 
 ```
